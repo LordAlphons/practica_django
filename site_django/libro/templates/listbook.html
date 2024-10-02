@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h4>Libros con valoración mayor a 1500</h4>
+    {% for libro in libros %}
+            {% if libro.valoracion > 1500 %}
+            <li>Título: {{ libro.titulo }}, Autor: {{ libro.autor }}, Valoración: {{ libro.valoracion }}</li>
+            {% endif %}
+    {% endfor %}
+
+<h4>Listado de todos los libros</h4>
+
+    {% for libro in libros %}
+        <li>Título: {{ libro.titulo }}, Autor: {{ libro.autor }}, Valoración: {{ libro.valoracion }}</li>
+    {% endfor %}
+
+{% endblock %}

@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#" style="color: #5414ff;">Site Web Django</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-auto"> <!-- Cambiado a me-auto para alinear a la izquierda -->
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}" style="color: #5414ff;">Inicio</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'listbook' %}" style="color: #5414ff;">Libros</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="color: #5414ff;">Acerca de</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" style="color: #5414ff;">Contacto</a>
+          </li>
+        </ul>
+        <ul class="navbar-nav"> <!-- Nueva lista para los botones de autenticación -->
+          {% if user.is_authenticated %}
+            <li class="nav-item">
+              <span class="navbar-text" style="color: #5414ff; margin-right: 15px; font-weight: bold;">Hola, {{ user.username }}</span>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-light" href="{% url 'logout' %}" style="background-color: #ff6347; color: white;">Cerrar Sesión</a> <!-- Color rojizo -->
+            </li>
+          {% else %}
+            <li class="nav-item">
+              <a class="btn btn-light" href="{% url 'login' %}" style="background-color: #add8e6; color: #5414ff;">Iniciar Sesión</a>
+            </li>
+            <li class="nav-item">
+              <a class="btn btn-light" href="{% url 'registro' %}" style="background-color: #98fb98; color: #5414ff;">Registro</a>
+            </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>

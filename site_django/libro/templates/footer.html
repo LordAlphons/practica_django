@@ -1,0 +1,40 @@
+<footer class="bg-dark text-white py-4 mt-5">
+    <div class="container">
+        <!-- Primera fila: Acerca de y enlaces rápidos -->
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Acerca de Nosotros</h5>
+                <p>Somos una plataforma dedicada a los amantes de la lectura y el desarrollo web en Django.</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Política de Privacidad</a></li>
+                    <li><a href="#" class="text-white">Términos de Servicio</a></li>
+                    <li><a href="#" class="text-white">Contacto</a></li>
+                    <li><a href="{% url 'listbook' %}" class="text-white">Libros</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <!-- Segunda fila: Productos y Contacto -->
+        <div class="row">
+            <div class="col-md-4">
+                <h5>Productos</h5>
+                <p><a href="{% url 'listbook' %}" class="text-white">Libros</a></p>
+            </div>
+            <div class="col-md-4">
+                <h5>Contacto</h5>
+                <p><i class="fas fa-home me-3"></i> Dirección, Calle, País</p>
+                <p><i class="fas fa-envelope me-3"></i> info@example.com</p>
+                <p><i class="fas fa-phone me-3"></i> +01 234 567 88</p>
+                <p><i class="fas fa-print me-3"></i> +01 234 567 89</p>
+            </div>
+        </div>
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+            <p class="mb-0">&copy; 2024 Tu Biblioteca. Todos los derechos reservados.</p>
+            <a class="text-reset fw-bold" href="http://localhost:8000">SiteWebDjango.com</a>
+        </div>
+    </div>
+</footer>

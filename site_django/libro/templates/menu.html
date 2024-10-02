@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-primary text-white py-5 mb-5">
+    <div class="container">
+        <h1 class="display-4">Bienvenido a Tu Biblioteca</h1>
+        <p class="lead">Explora, gestiona y disfruta de tu colección de libros.</p>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-book mr-2"></i>Libros</h5>
+                    <p class="card-text">Gestiona tu colección de libros.</p>
+                    <a href="{% url 'listbook' %}" class="btn btn-outline-primary">Ver Libros</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-sync-alt mr-2"></i>Palíndromos</h5>
+                    <p class="card-text">Verifica si una palabra es un palíndromo.</p>
+                    <a href="verificar_palindromo" class="btn btn-outline-primary">Verificar Palíndromo</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-file-alt mr-2"></i>Formularios</h5>
+                    <p class="card-text">Accede a diferentes tipos de formularios.</p>
+                    <a href="{% url 'datos_form' %}" class="btn btn-outline-primary">Ir a Formularios</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    {% if user.is_authenticated %}
+    <div class="bg-light p-4 rounded mb-5">
+        <h2 class="mb-3">Bienvenido, {{ user.username }}!</h2>
+        <p>Aquí tienes algunas opciones adicionales:</p>
+        <div class="list-group">
+            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-user mr-2"></i>Mi Perfil</a>
+            <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-heart mr-2"></i>Mis Libros Favoritos</a>
+            <a href="{% url 'logout' %}" class="list-group-item list-group-item-action text-danger"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
+        </div>
+    </div>
+    {% else %}
+    <div class="text-center mb-5">
+        <p class="lead">¿Aún no tienes una cuenta? <a href="{% url 'registro' %}" class="btn btn-primary ml-2">Regístrate aquí</a></p>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Footer 
+<footer class="bg-dark text-white py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>Acerca de Nosotros</h5>
+                <p>Somos una plataforma dedicada a los amantes de la lectura.</p>
+            </div>
+            <div class="col-md-6">
+                <h5>Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Política de Privacidad</a></li>
+                    <li><a href="#" class="text-white">Términos de Servicio</a></li>
+                    <li><a href="#" class="text-white">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="text-center mb-0">&copy; 2024 Tu Biblioteca. Todos los derechos reservados.</p>
+    </div>
+</footer>-->
+
+{% endblock %}

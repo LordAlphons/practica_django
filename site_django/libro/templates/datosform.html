@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+
+<html>
+    <head>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+
+    <style>
+    .i-am-centered {
+    margin: auto;
+    max-width: 300px;
+    padding-top: 20%;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="i-am-centered">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+    </div>
+</body>
+
+</html>
