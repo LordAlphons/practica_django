@@ -11,11 +11,15 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
 from .models import BoardsModel
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.views.generic import TemplateView
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
-from django.views.generic import TemplateView
-class IndexPageView(TemplateView):
+class IndexPageView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
+    login_url = '/login/'
+    permission_required = 'libro.es_miembro_1'
     template_name = "index.html"
 
 def obtenerFecha(request, name):
@@ -71,6 +75,7 @@ def widget_view(request):
  context['form'] = form
  return render(request, "widget_home.html", context)
 
+@login_required
 def libroform_view(request):
     context ={}
  # crear el objeto form
@@ -84,40 +89,39 @@ def libroform_view(request):
     return render(request, "libroform.html", context)
 
 def registro_view(request):
-    if request.method == "POST":
-        form = RegistroUsuarioForm(request.POST)
-        
-        if form.is_valid():
-            # Obtenemos el content type del modelo
+ if request.method == "POST":
+    form = RegistroUsuarioForm(request.POST)
+    if form.is_valid():
+            user = form.save()
             content_type = ContentType.objects.get_for_model(BoardsModel)
-            
-            # Obtenemos el permiso a asignar
+
             es_miembro_1 = Permission.objects.get(
                 codename='es_miembro_1',
                 content_type=content_type
             )
-            
-            # Guardamos el nuevo usuario
-            user = form.save()
-            
-            # Agregamos el permiso al usuario en el momento de registrarse
-            user.user_permissions.add(es_miembro_1)
-            
-            # Iniciamos sesión
+
+            add_boards = Permission.objects.get(
+                codename='add_boardsmodel',
+                content_type=content_type
+            )
+
+            view_boards = Permission.objects.get(
+                codename='view_boardsmodel',
+                content_type=content_type
+            )
+
+ # Agregamos el permisos al usuario
+            user.user_permissions.add(es_miembro_1, add_boards, view_boards)
+            user.is_staff = True
+            user.save()
             login(request, user)
             messages.success(request, "Registrado Satisfactoriamente.")
-            return redirect('/menu')
-        
-        messages.error(request, "Registro inválido. Algunos datos son incorrectos.")
-    
-    else:
-        form = RegistroUsuarioForm()
-
-    return render(
-        request=request,
-        template_name="registration/registro.html",
-        context={"register_form": form}
-    )
+            return HttpResponseRedirect ('/menu')
+    messages.error(request, "Registro invalido. Algunos datos son incorrectos.")       
+    form = RegistroUsuarioForm()
+    return render (request= request,
+template_name="registration/registro.html",
+context={"register_form":form})
 
 def login_view(request):
     if request.method == "POST":
@@ -141,3 +145,18 @@ def logout_view(request):
     logout(request)
     messages.info(request, "Se ha cerrado la sesión satisfactoriamente.")
     return HttpResponseRedirect('/menu')
+
+@login_required
+def libro_add(request):
+    if request.method == 'POST':
+        form = BoardsForm(request.POST)
+        if form.is_valid():
+            form.save()  # Guarda el nuevo libro en la base de datos
+            messages.success(request, "Libro agregado exitosamente.")
+            return redirect('listbook')  # Redirige a la lista de libros
+        else:
+            messages.error(request, "Error al agregar el libro. Por favor, verifica los datos.")
+    else:
+        form = BoardsForm()
+
+    return render(request, 'libro_add.html', {'form': form})

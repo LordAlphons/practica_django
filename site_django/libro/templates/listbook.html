@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h4>Libros con valoración mayor a 1500</h4>
-    {% for libro in libros %}
-            {% if libro.valoracion > 1500 %}
-            <li>Título: {{ libro.titulo }}, Autor: {{ libro.autor }}, Valoración: {{ libro.valoracion }}</li>
-            {% endif %}
-    {% endfor %}
 
-<h4>Listado de todos los libros</h4>
+<h2>Listado de Libros</h2>
 
-    {% for libro in libros %}
-        <li>Título: {{ libro.titulo }}, Autor: {{ libro.autor }}, Valoración: {{ libro.valoracion }}</li>
-    {% endfor %}
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Valoracion</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for libro in libros %}
+        <tr>
+            <td>{{ libro.titulo }}</td>
+            <td>{{ libro.autor }}</td>
+            <td>{{ libro.valoracion }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="7">No hay libros registrados.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 {% endblock %}
